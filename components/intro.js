@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    justifyContent: 'space-between',
   },
 });
 
