@@ -25,26 +25,46 @@ class Intro extends Component {
 	render() {
 			return (
 				<View style={styles.container}>
-					<Image
-	          style={{width: 300, height: 300}}
-	          source={require('../assets/logo.png')}
-	        />
-					<Button
-					  onPress={this.choose_app_lan.bind(this, 'arabic')}
-					  title="العربية"
-					  color="#f57f17"
-					/>
-					<Button
-					  onPress={this.choose_app_lan.bind(this, 'English')}
-					  title="English"
-					  color="#f57f17"
-					/>
-					<Button
-					  onPress={this.choose_app_lan.bind(this, 'Türkçe')}
-					  title="Türkçe"
-					  color="#f57f17"
-					/>
+					<View style={styles.img}>
+						<Image
+		          style={{width: 300, height: 300}}
+		          source={require('../assets/logo.png')}
+		        />
+	        </View>
+	        <View style={styles.btn} >
+						<Button
+						  onPress={this.choose_app_lan.bind(this, 'arabic')}
+						  title="العربية"
+						  color="#ff8a50"
+						  marginBottom = '10'
+						/>
+					</View>
+					<View style={styles.btn} >
+						<Button
+						  onPress={this.choose_app_lan.bind(this, 'English')}
+						  title="English"
+						  color="#ff8a50"
+						  marginBottom = '10'
+						/>
+					</View>
+					<View style={styles.btn} >
+						<Button
+						  onPress={this.choose_app_lan.bind(this, 'Türkçe')}
+						  title="Türkçe"
+						  color="#ff8a50"
+						/>
+					</View>
+					<View style={styles.last_line}>
+		        <Text style={styles.last_text}>
+		          Eğer ücretli Türkçe öğretmek isterseniz :
+		        </Text>
 
+		       <Button
+		       		onPress={this.choose_app_lan.bind(this, 'Türkçe')}
+						  title="Buraya Tıklayın"
+						  color="#8aacc8"
+						/>
+      		</View>
 				</View>
 			)
 		}
@@ -53,11 +73,28 @@ class Intro extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    backgroundColor: '#eee',
+  },
+  btn: {
+  	flex: 1,
+    justifyContent: 'center',
+    marginBottom: 17
+  },
+  last_line: {
+  	flex: 3,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
   },
+  last_text:{
+  	fontSize: 17,
+  	marginBottom: 5,
+  	color: '#444444'
+  },
+  img: {
+  	flex: 5
+  }
 });
 
 export default Intro
