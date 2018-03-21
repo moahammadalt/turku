@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { cs } from './helpers';
-import Intro from './components/intro';
-//import { StackNavigator, } from 'react-navigation';
+import App_router from './config/router';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
 
 export default class App extends React.Component {
@@ -14,18 +15,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Intro data={'dddd'}/>
-      </View>
+      <App_router />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
