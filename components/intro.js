@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
-import App_router from '../config/router';
+import Navigator from '../config/router';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { cs } from '../helpers';
 

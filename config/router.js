@@ -1,14 +1,28 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
 import Intro from '../components/intro';
 import Logging from '../components/logging';
+import {
+    createReduxBoundAddListener,
+    createReactNavigationReduxMiddleware,
+  } from 'react-navigation-redux-helpers';
+
+import Feed from './components/Feed'
+import ItemDetail from './components/ItemDetail'
 
 const get_route = ()=>{
-  return 'Intro';
-}
+	return 'Intro';
+};
 
-export const App_router = StackNavigator(
+const middleware = createReactNavigationReduxMiddleware(
+    "root",
+    state => state.navigation, // <-- make sure this is where your nav state lives (i.e. if your redux state is at `state.nav` use state => state.nav instead)
+  );
+  const addListener = createReduxBoundAddListener("root");
+
+export const Navigator = new StackNavigator(
 	{
 		Intro:{
 			screen: Intro,
@@ -23,9 +37,24 @@ export const App_router = StackNavigator(
 			}
 		}
 	},
-  {
-    initialRouteName: get_route(),
-  }
+	{
+		initialRouteName: get_route(),
+	}
 );
 
-export default App_router;
+class Nav extends React.Component {
+	render(){
+		return(
+			<Navigator navigation={addNavigationHelpers({
+				dispatch: this.props.dispatch,
+				state: this.props.navigation,
+				addListener
+			})} />
+		);
+	}
+}
+const mapStateToProps = state => ({
+  navigation: state.navigation,
+})
+
+export default connect(mapStateToProps)(Nav);
