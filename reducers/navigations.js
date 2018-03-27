@@ -2,6 +2,7 @@ import { NavigationActions } from 'react-navigation';
 import Navigator from '../config/router';
 
 const initialAction = { type: NavigationActions.Init };
+console.log(initialAction)
 const initialState = Navigator.router.getStateForAction(initialAction);
 
 export default (state = initialState, action) => {

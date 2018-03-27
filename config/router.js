@@ -15,7 +15,7 @@ const get_route = ()=>{
 
 const middleware = createReactNavigationReduxMiddleware(
     "root",
-    state => state.navigation, // <-- make sure this is where your nav state lives (i.e. if your redux state is at `state.nav` use state => state.nav instead)
+    state => state.navigation,
   );
   const addListener = createReduxBoundAddListener("root");
 
