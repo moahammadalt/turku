@@ -9,9 +9,6 @@ import {
     createReactNavigationReduxMiddleware,
   } from 'react-navigation-redux-helpers';
 
-import Feed from './components/Feed'
-import ItemDetail from './components/ItemDetail'
-
 const get_route = ()=>{
 	return 'Intro';
 };
@@ -38,7 +35,7 @@ export const Navigator = new StackNavigator(
 		}
 	},
 	{
-		initialRouteName: get_route(),
+		initialRouteName: 'Intro',
 	}
 );
 
