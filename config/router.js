@@ -5,19 +5,16 @@ import { connect } from 'react-redux';
 import Intro from '../components/intro';
 import Logging from '../components/logging';
 import {
-    createReduxBoundAddListener,
-    createReactNavigationReduxMiddleware,
-  } from 'react-navigation-redux-helpers';
+	createReduxBoundAddListener,
+	createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers';
 
 const get_route = ()=>{
 	return 'Intro';
 };
 
-const middleware = createReactNavigationReduxMiddleware(
-    "root",
-    state => state.navigation,
-  );
-  const addListener = createReduxBoundAddListener("root");
+const middleware = createReactNavigationReduxMiddleware('root', state => state.navigation );
+const addListener = createReduxBoundAddListener('root');
 
 export const Navigator = new StackNavigator(
 	{
@@ -51,7 +48,7 @@ class Nav extends React.Component {
 	}
 }
 const mapStateToProps = state => ({
-  navigation: state.navigation,
-})
+	navigation: state.navigation,
+});
 
-export default connect(mapStateToProps)(Nav);
+export const AppNav = connect(mapStateToProps)(Nav);

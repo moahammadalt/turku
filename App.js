@@ -8,7 +8,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import logger from 'redux-logger';
 
-import Navigator from './config/router';
+import { Navigator, AppNav } from './config/router';
 import navigation from './reducers/navigations';
 
 const reducer = combineReducers({ navigation });
@@ -18,13 +18,12 @@ export default class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		console.log('hiiii')
 	}
 
 	render() {
 		return (
 			<Provider store={store}>
-				<Navigator />
+				<AppNav />
 			</Provider>
 		);
 	}
