@@ -10,9 +10,21 @@ import logger from 'redux-logger';
 
 import { Navigator, AppNav } from './config/router';
 import navigation from './reducers/navigations';
+import intro_reducer from './reducers/intro_reducer';
+import { bindActionCreators } from 'redux';
 
-const reducer = combineReducers({ navigation });
+const reducer = combineReducers({ navigation, intro_reducer });
 const store = createStore(reducer, applyMiddleware(logger));
+
+store.subscribe(()=>{
+	cs('aaaaaaaaaaaa');
+	cs(store.getState());
+});
+
+store.dispatch({
+	type: 'set_lan',
+	payload: 23,
+});
 
 export default class App extends React.Component {
 
