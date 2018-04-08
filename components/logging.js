@@ -1,37 +1,32 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
+import { connect } from "react-redux";
 import { cs } from '../helpers';
 
 class Logging extends Component {
 
 	constructor(props) {
 	  super(props);
-	  cs(this.props);
-
-	  this.state = {
-	  	app_lan: 'aaa',
-	  };
-	}
-
-	choose_app_lan (lan){
-
-		cs(lan)
-
-		this.setState({app_lan: lan}, ()=>{
-		   cs(this.state);
-		});
 	}
 	
 	render() {
 		return (
 			<View style={styles.container}>
 				<Text>
-          hiiiiiiiiiiiiiii
+          {this.props.lan}
         </Text>
 			</View>
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+  return {
+		lan: state.app_lan,
+  };
+};
+
+export default connect(mapStateToProps)(Logging);
 
 const styles = StyleSheet.create({
   container: {
@@ -41,4 +36,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Logging

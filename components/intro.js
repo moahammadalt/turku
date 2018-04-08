@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
+import { connect } from "react-redux";
 import Navigator from '../config/router';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { cs } from '../helpers';
@@ -19,11 +20,8 @@ class Intro extends Component {
 
 		cs(lan)
 
-		this.setState({app_lan: lan}, ()=>{
-		   cs(this.state);
-
-		   this.props.navigation.navigate('Logging');
-		});
+		this.props.set_lan(lan);
+		this.props.navigation.navigate('Logging');
 	}
 	
 	render() {
@@ -37,7 +35,7 @@ class Intro extends Component {
         </View>
         <View style={styles.btn} >
 					<Button
-					  onPress={this.choose_app_lan.bind(this, 'arabic')}
+					  onPress={this.choose_app_lan.bind(this, 'AR')}
 					  title="العربية"
 					  color="#ff8a50"
 					  marginBottom = '10'
@@ -45,7 +43,7 @@ class Intro extends Component {
 				</View>
 				<View style={styles.btn} >
 					<Button
-					  onPress={this.choose_app_lan.bind(this, 'English')}
+					  onPress={this.choose_app_lan.bind(this, 'EN')}
 					  title="English"
 					  color="#ff8a50"
 					  marginBottom = '10'
@@ -54,7 +52,7 @@ class Intro extends Component {
 				</View>
 				<View style={styles.btn} >
 					<Button
-					  onPress={this.choose_app_lan.bind(this, 'Türkçe')}
+					  onPress={this.choose_app_lan.bind(this, 'TR')}
 					  title="Türkçe"
 					  color="#ff8a50"
 					/>
@@ -74,6 +72,24 @@ class Intro extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		set_lan: (name) => {
+			dispatch({
+				type: "SET_LAN",
+				payload: name
+			});
+		}
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Intro);
+
 
 const styles = StyleSheet.create({
   container: {
@@ -103,5 +119,3 @@ const styles = StyleSheet.create({
   	flex: 5
   }
 });
-
-export default Intro
