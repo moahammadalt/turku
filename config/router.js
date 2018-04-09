@@ -1,6 +1,5 @@
 import React from 'react';
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
-import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Intro from '../components/intro';
 import Logging from '../components/logging';
@@ -32,7 +31,7 @@ export const Navigator = new StackNavigator(
 		}
 	},
 	{
-		initialRouteName: 'Intro',
+		initialRouteName: get_route(),
 	}
 );
 
