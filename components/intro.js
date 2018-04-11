@@ -11,7 +11,7 @@ class Intro extends React.Component {
 
 	choose_app_lan (lan){
 
-		cs(lan)
+		cs(lan);
 		this.props.set_lan(lan);
 		this.props.navigation.navigate('Logging');
 	}
