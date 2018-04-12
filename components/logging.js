@@ -6,10 +6,6 @@ import { cs } from '../helpers';
 
 class Logging extends React.Component {
 
-	constructor(props) {
-		super(props);
-		cs(this.props.lan);
-	}
 	
 	render() {
 		return (
@@ -58,7 +54,7 @@ class Logging extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		lan: state.app_lan,
+		app_lan: state.app_lan,
 	};
 };
 

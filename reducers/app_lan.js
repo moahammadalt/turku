@@ -1,4 +1,4 @@
-const app_lan = (state = 'EN', action) => {
+const app_lan = (state = '', action) => {
 	switch (action.type) {
 	case 'SET_LAN':
 		state = action.payload;

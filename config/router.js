@@ -3,13 +3,21 @@ import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 import { connect } from 'react-redux';
 import Intro from '../components/intro';
 import Logging from '../components/logging';
+import { cs } from '../helpers';
 import {
 	createReduxBoundAddListener,
 	createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers';
 
-const get_route = ()=>{
-	return 'Intro';
+const get_route = (app_lan)=>{
+	let initial_route = '';
+	if(app_lan != ''){
+		initial_route = 'Intro';
+	}
+	else{
+		initial_route = 'Logging';
+	}
+	return initial_route;
 };
 
 const middleware = createReactNavigationReduxMiddleware('root', state => state.navigation );
@@ -36,18 +44,40 @@ export const Navigator = new StackNavigator(
 );
 
 class Nav extends React.Component {
+	
+	componentWillReceiveProps(nextProps){
+		cs('ccccc componentWillReceiveProps ccccc');
+		get_route(nextProps.app_lan);
+		this.props.set_labels(nextProps.app_lan);
+	}
+
 	render(){
 		return(
 			<Navigator navigation={addNavigationHelpers({
 				dispatch: this.props.dispatch,
 				state: this.props.navigation,
-				addListener
+				addListener,
+				reduxState: this.props
 			})} />
 		);
 	}
 }
-const mapStateToProps = state => ({
-	navigation: state.navigation,
-});
+const mapStateToProps = state => {
+	return {
+		navigation: state.navigation,
+		app_lan: state.app_lan,
+	};
+};
 
-export const AppNav = connect(mapStateToProps)(Nav);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		set_labels: (name) => {
+			dispatch({
+				type: 'SET_APP_LABELS',
+				payload: name
+			});
+		}
+	};
+};
+
+export const AppNav = connect(mapStateToProps, mapDispatchToProps)(Nav);
