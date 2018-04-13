@@ -1,7 +1,10 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
+import CHANGE_ROUTE from '../actions/go_to_route';
 import { cs } from '../helpers';
+
 
 class Intro extends React.Component {
 
@@ -13,7 +16,16 @@ class Intro extends React.Component {
 
 		cs(lan);
 		this.props.set_lan(lan);
-		this.props.navigation.navigate('Logging');
+
+		const navigateAction = NavigationActions.navigate({
+			routeName: 'Logging',
+
+			params: {},
+
+			action: NavigationActions.navigate({ routeName: 'Logging' }),
+		});
+
+		this.props.change_route(navigateAction);
 	}
 	
 	render() {
@@ -66,7 +78,9 @@ class Intro extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		navigation: state.navigation,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -76,7 +90,10 @@ const mapDispatchToProps = (dispatch) => {
 				type: 'SET_LAN',
 				payload: name
 			});
-		}
+		},
+		change_route: (name) => {
+			dispatch(name);
+		},
 	};
 };
 

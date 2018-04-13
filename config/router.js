@@ -56,8 +56,7 @@ class Nav extends React.Component {
 			<Navigator navigation={addNavigationHelpers({
 				dispatch: this.props.dispatch,
 				state: this.props.navigation,
-				addListener,
-				reduxState: this.props
+				addListener
 			})} />
 		);
 	}

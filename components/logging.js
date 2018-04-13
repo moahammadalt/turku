@@ -3,9 +3,13 @@ import { Text, View, StyleSheet, Image, Button, WebView, Linking, TouchableOpaci
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { cs } from '../helpers';
+import CHANGE_ROUTE from '../actions/go_to_route';
 
 class Logging extends React.Component {
 
+	go_back (){
+		this.props.change_route('Intro');
+	}
 	
 	render() {
 		return (
@@ -24,7 +28,7 @@ class Logging extends React.Component {
 
 				<TouchableOpacity
 					style={styles.fb_button}
-					onPress={this.onPress}
+					onPress={this.go_back.bind(this)}
 				>
 					<View style={styles.button_inner}>
 						<Icon
@@ -58,7 +62,15 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(Logging);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		change_route: (name) => {
+			dispatch(CHANGE_ROUTE(name));
+		},
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logging);
 
 const styles = StyleSheet.create({
 	container: {
