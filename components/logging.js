@@ -3,12 +3,11 @@ import { Text, View, StyleSheet, Image, Button, WebView, Linking, TouchableOpaci
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { cs } from '../helpers';
-import CHANGE_ROUTE from '../actions/go_to_route';
 
 class Logging extends React.Component {
 
 	go_back (){
-		this.props.change_route('Intro');
+		//this.props.change_route('Intro');
 	}
 	
 	render() {
@@ -64,8 +63,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		change_route: (name) => {
-			dispatch(CHANGE_ROUTE(name));
+		bla: (val) => {
+			dispatch({
+				type: '',
+				payload: val,
+			});
 		},
 	};
 };

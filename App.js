@@ -3,7 +3,6 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 import { AppNav } from './config/router';
-import navigation from './reducers/navigations';
 import app_lan from './reducers/app_lan';
 import app_labels from './reducers/app_labels';
 import { AsyncStorage } from 'react-native';
@@ -16,7 +15,7 @@ const myLogger = (store) => (next) => (action) => {
 	next(action);
 };
 
-const reducers = combineReducers({ navigation, app_lan, app_labels });
+const reducers = combineReducers({ app_lan, app_labels });
 const store = createStore(reducers, compose(autoRehydrate(),applyMiddleware(logger)));
 
 export default class App extends React.Component {

@@ -1,17 +1,13 @@
 import React from 'react';
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import Intro from '../components/intro';
 import Logging from '../components/logging';
 import { cs } from '../helpers';
-import {
-	createReduxBoundAddListener,
-	createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers';
 
 const get_route = (app_lan)=>{
 	let initial_route = '';
-	if(app_lan != ''){
+	if(app_lan == ''){
 		initial_route = 'Intro';
 	}
 	else{
@@ -19,9 +15,6 @@ const get_route = (app_lan)=>{
 	}
 	return initial_route;
 };
-
-const middleware = createReactNavigationReduxMiddleware('root', state => state.navigation );
-const addListener = createReduxBoundAddListener('root');
 
 export const Navigator = new StackNavigator(
 	{
@@ -53,17 +46,12 @@ class Nav extends React.Component {
 
 	render(){
 		return(
-			<Navigator navigation={addNavigationHelpers({
-				dispatch: this.props.dispatch,
-				state: this.props.navigation,
-				addListener
-			})} />
+			<Navigator />
 		);
 	}
 }
 const mapStateToProps = state => {
 	return {
-		navigation: state.navigation,
 		app_lan: state.app_lan,
 	};
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationActions } from 'react-navigation';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
-import CHANGE_ROUTE from '../actions/go_to_route';
 import { cs } from '../helpers';
 
 
@@ -16,7 +15,8 @@ class Intro extends React.Component {
 
 		cs(lan);
 		this.props.set_lan(lan);
-		this.props.change_route('Logging');
+
+		this.props.navigation.navigate('Logging');
 	}
 	
 	render() {
@@ -70,7 +70,6 @@ class Intro extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		navigation: state.navigation,
 	};
 };
 
@@ -81,9 +80,6 @@ const mapDispatchToProps = (dispatch) => {
 				type: 'SET_LAN',
 				payload: name
 			});
-		},
-		change_route: (name) => {
-			dispatch(CHANGE_ROUTE(name));
 		},
 	};
 };
