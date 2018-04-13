@@ -16,16 +16,7 @@ class Intro extends React.Component {
 
 		cs(lan);
 		this.props.set_lan(lan);
-
-		const navigateAction = NavigationActions.navigate({
-			routeName: 'Logging',
-
-			params: {},
-
-			action: NavigationActions.navigate({ routeName: 'Logging' }),
-		});
-
-		this.props.change_route(navigateAction);
+		this.props.change_route('Logging');
 	}
 	
 	render() {
@@ -92,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
 			});
 		},
 		change_route: (name) => {
-			dispatch(name);
+			dispatch(CHANGE_ROUTE(name));
 		},
 	};
 };
