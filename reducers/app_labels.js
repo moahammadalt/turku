@@ -1,24 +1,26 @@
-const app_labels = (state = '', action) => {
-	switch (action.type) {
+import { labels } from '../helpers';
 
+const app_labels = (state = '', action) => {
+	let new_state;
+	switch (action.type) {
 	case 'SET_APP_LABELS':
 		
 		if(action.payload == 'EN'){
-			state = 'app is english';
+			new_state = labels.EN;
 		}
 		else if(action.payload == 'AR'){
-			state = 'app is turkish';
+			new_state = labels.AR;
 		}
 		else if(action.payload == 'TR'){
-			state = 'app is arabic';
+			new_state = labels.TR;
 		}
 		else{
-			state = 'app is undefined';
+			new_state = {};
 		}
 		break;
 
 	}
-	return state;
+	return new_state || state;
 };
 
 export default app_labels;

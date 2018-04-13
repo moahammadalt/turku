@@ -6,8 +6,11 @@ import { cs } from '../helpers';
 
 class Logging extends React.Component {
 
-	go_back (){
-		//this.props.change_route('Intro');
+	static labels = {};
+
+	constructor(props){
+		super(props);
+		this.labels = this.props.labels.Logging;
 	}
 	
 	render() {
@@ -22,19 +25,18 @@ class Logging extends React.Component {
 				</View>
 
 				<View style={styles.text1}>
-					<Text style={styles.text1_inner}> Log in to start </Text>
+					<Text style={styles.text1_inner}> {this.labels.login_start} </Text>
 				</View>
 
 				<TouchableOpacity
 					style={styles.fb_button}
-					onPress={this.go_back.bind(this)}
 				>
 					<View style={styles.button_inner}>
 						<Icon
 							name="facebook"
 							style={styles.social_icons}
 						></Icon>
-						<Text style={styles.inner_icon_text}>  By Facebook</Text>
+						<Text style={styles.inner_icon_text}> {this.labels.by_facebook} </Text>
 					</View>
 				</TouchableOpacity>
 
@@ -47,7 +49,7 @@ class Logging extends React.Component {
 							name="google"
 							style={styles.social_icons}
 						></Icon>
-						<Text style={styles.inner_icon_text}>  By Google</Text>
+						<Text style={styles.inner_icon_text}> {this.labels.by_google} </Text>
 					</View>
 				</TouchableOpacity>
 			</View>
@@ -57,7 +59,7 @@ class Logging extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		app_lan: state.app_lan,
+		labels: state.app_labels,
 	};
 };
 

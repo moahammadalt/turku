@@ -5,20 +5,26 @@ import logger from 'redux-logger';
 import { AppNav } from './config/router';
 import app_lan from './reducers/app_lan';
 import app_labels from './reducers/app_labels';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Text } from 'react-native';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { AppLoading } from 'expo';
-import { cs } from './helpers';
 
 const myLogger = (store) => (next) => (action) => {
-	cs('Logged Action: ', action);
+	console.log('Logged Action: ', action);
 	next(action);
 };
 
 const reducers = combineReducers({ app_lan, app_labels });
-const store = createStore(reducers, compose(autoRehydrate(),applyMiddleware(logger)));
+const store = createStore(reducers, undefined, compose(autoRehydrate(),applyMiddleware(logger)));
 
 export default class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			boot: false
+		};
+	}
 
 	componentDidMount() {
 		persistStore(
@@ -26,15 +32,25 @@ export default class App extends React.Component {
 			{
 				storage: AsyncStorage,
 				whitelist: ['app_lan']
+			},
+			() => {
+				this.setState({ boot: true });
 			}
 		);
 	}
 
 	render() {
-		return (
-			<Provider store={store}>
-				<AppNav />
-			</Provider>
-		);
+		if(this.state.boot){
+			return (
+				<Provider store={store}>
+					<AppNav boot={true} />
+				</Provider>
+			);
+		}
+		else{
+			return (
+				<AppLoading />
+			);
+		}
 	}
 }

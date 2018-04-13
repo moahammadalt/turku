@@ -4,18 +4,11 @@ import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { cs } from '../helpers';
 
-
 class Intro extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	choose_app_lan (lan){
-
-		cs(lan);
 		this.props.set_lan(lan);
-
+		this.props.set_labels(lan);
 		this.props.navigation.navigate('Logging');
 	}
 	
@@ -75,12 +68,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		set_lan: (name) => {
+		set_lan: (val) => {
 			dispatch({
 				type: 'SET_LAN',
-				payload: name
+				payload: val
 			});
 		},
+		set_labels: (val) => {
+			dispatch({
+				type: 'SET_APP_LABELS',
+				payload: val
+			});
+		}
 	};
 };
 

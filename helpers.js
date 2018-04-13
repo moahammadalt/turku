@@ -25,7 +25,9 @@ export const labels = {
 	},
 	TR: {
 		Logging: {
-		
+			login_start: 'Başlamak için kayıt ol',
+			by_facebook: 'Facebook\'le',
+			by_google: 'Google\'yle',
 		},
 		Home: {
 
