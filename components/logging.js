@@ -1,28 +1,46 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Button, WebView, Linking, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Image, Button, WebView, Linking, TouchableOpacity, Platform, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { cs } from '../helpers';
+import SafariView from 'react-native-safari-view';
 
 class Logging extends React.Component {
 
 	static labels = {};
 
 	constructor(props){
-		super(props);
+		super(props);	
 		this.labels = this.props.labels.Logging;
 	}
 
 	// Set up Linking
   componentDidMount() {
-    // Add event listener to handle OAuthLogin:// URLs
+    /*// Add event listener to handle OAuthLogin:// URLs *orjinal code*
     Linking.addEventListener('url', this.handleOpenURL);
     // Launched from an external URL
     Linking.getInitialURL().then((url) => {
       if (url) {
         this.handleOpenURL({ url });
       }
-    });
+		});*/
+
+		// testing code
+		console.log("LoginScreen did mount");
+		Linking.getInitialURL()
+		.then(url => {
+				console.log("Getting initial URL", url);
+		})
+		.catch(err => {
+				console.warn('Initial URL Error', err)
+		});
+		
+		Linking.addEventListener('url', e => {
+				console.log("Listener invoked");
+				console.log(e.url);
+				//WebBrowser.dismissBrowser();
+				//this._handleDeeplink(e.url);
+		});
   };
 
   componentWillUnmount() {
@@ -32,21 +50,24 @@ class Logging extends React.Component {
 
   handleOpenURL = ({ url }) => {
     // Extract stringified user string out of the URL
-    const [, user_string] = url.match(/user=([^#]+)/);
-    this.setState({
+		const [, user_string] = url.match(/user=([^#]+)/);
+		alert(user_string)
+		console.log(url);
+		console.log(user_string);
+    /*this.setState({
       // Decode the user string and parse it into JSON
       user: JSON.parse(decodeURI(user_string))
-    });
+    });*/
     if (Platform.OS === 'ios') {
       SafariView.dismiss();
     }
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('https://localhost:3000/auth/facebook');
+  loginWithFacebook = () => this.openURL('http://10.0.2.2:8080/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('https://localhost:3000/auth/google');
+  loginWithGoogle = () => this.openURL('http://10.0.2.2:8080/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
@@ -80,6 +101,7 @@ class Logging extends React.Component {
 
 				<TouchableOpacity
 					style={styles.fb_button}
+					onPress={this.loginWithFacebook}
 				>
 					<View style={styles.button_inner}>
 						<Icon
@@ -92,6 +114,7 @@ class Logging extends React.Component {
 
 				<TouchableOpacity
 					style={styles.gm_button}
+					onPress={this.loginWithGoogle}
 					onPress={this.onPress}
 				>
 					<View style={styles.button_inner}>
