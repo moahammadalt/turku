@@ -16,30 +16,13 @@ class Logging extends React.Component {
 
 	// Set up Linking
   componentDidMount() {
-    /*// Add event listener to handle OAuthLogin:// URLs *orjinal code*
+    // Add event listener to handle OAuthLogin:// URLs *orjinal code*
     Linking.addEventListener('url', this.handleOpenURL);
     // Launched from an external URL
     Linking.getInitialURL().then((url) => {
       if (url) {
         this.handleOpenURL({ url });
       }
-		});*/
-
-		// testing code
-		console.log("LoginScreen did mount");
-		Linking.getInitialURL()
-		.then(url => {
-				console.log("Getting initial URL", url);
-		})
-		.catch(err => {
-				console.warn('Initial URL Error', err)
-		});
-		
-		Linking.addEventListener('url', e => {
-				console.log("Listener invoked");
-				console.log(e.url);
-				//WebBrowser.dismissBrowser();
-				//this._handleDeeplink(e.url);
 		});
   };
 
