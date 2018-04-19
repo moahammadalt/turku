@@ -33,10 +33,9 @@ class Logging extends React.Component {
 
   handleOpenURL = ({ url }) => {
     // Extract stringified user string out of the URL
-		const [, user_string] = url.match(/user=([^#]+)/);
-		alert(user_string)
+		const [user_string] = url.match(/user=([^#]+)/);
 		console.log(url);
-		console.log(user_string);
+		console.log(decodeURI(user_string));
     /*this.setState({
       // Decode the user string and parse it into JSON
       user: JSON.parse(decodeURI(user_string))
@@ -47,10 +46,10 @@ class Logging extends React.Component {
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('http://10.0.2.2:8080/auth/facebook');
+  loginWithFacebook = () => this.openURL('https://turkubackend.herokuapp.com/auth/facebook');
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://10.0.2.2:8080/auth/google');
+  loginWithGoogle = () => this.openURL('https://turkubackend.herokuapp.com/auth/google');
 
   // Open URL in a browser
   openURL = (url) => {
