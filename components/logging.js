@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { cs } from '../helpers';
 import SafariView from 'react-native-safari-view';
+import { AppLoading } from 'expo';
 
 class Logging extends React.Component {
 
@@ -14,56 +15,83 @@ class Logging extends React.Component {
 		this.labels = this.props.labels.Logging;
 	}
 
+	
+
 	// Set up Linking
   componentDidMount() {
-    // Add event listener to handle OAuthLogin:// URLs *orjinal code*
-    Linking.addEventListener('url', this.handleOpenURL);
-    // Launched from an external URL
-    Linking.getInitialURL().then((url) => {
-      if (url) {
-        this.handleOpenURL({ url });
-      }
+		// Add event listener to handle OAuthLogin:// URLs *orjinal code*
+		Linking.addEventListener('url', this.handleOpenURL);
+		// Launched from an external URL
+		Linking.getInitialURL().then((url) => {
+		  if (url) {
+				this.handleOpenURL({ url });
+		  }
+		}).catch(() => {
+			//alert('some thing went wrong in linking');
 		});
   };
 
   componentWillUnmount() {
-    // Remove event listener
-    Linking.removeEventListener('url', this.handleOpenURL);
+		// Remove event listener
+		Linking.removeEventListener('url', this.handleOpenURL);
   };
 
   handleOpenURL = ({ url }) => {
-    // Extract stringified user string out of the URL
-		const [user_string] = url.match(/user=([^#]+)/);
+		// Extract stringified user string out of the URL
 		console.log(url);
-		console.log(decodeURI(user_string));
-    /*this.setState({
-      // Decode the user string and parse it into JSON
-      user: JSON.parse(decodeURI(user_string))
-    });*/
-    if (Platform.OS === 'ios') {
-      SafariView.dismiss();
-    }
+		const [,user_string] = url.match(/user=([^#]+)/);
+
+		let user_array = decodeURI(user_string).split(',');
+		console.log(user_array);
+		const user = {
+			id: user_array[2].split('"')[3],
+			name: user_array[0].split('"')[3].split(' ')[0],
+			last_name: user_array[0].split('"')[3].split(' ')[1],
+			img: user_array[1].split('"')[3],
+			email: user_array[3].split('"')[3],
+		}
+
+		this.props.set_user_auth(user);
+		this.props.navigation.navigate('Home_container');
+		
+		if (Platform.OS === 'ios') {
+		  SafariView.dismiss();
+		}
   };
 
   // Handle Login with Facebook button tap
-  loginWithFacebook = () => this.openURL('https://turkubackend.herokuapp.com/auth/facebook');
+  loginWithFacebook = () => {
+		this.openURL('https://turkubackend.herokuapp.com/auth/facebook');
+
+		/*const user = {
+		  "email": "mohammad.altenji@gmail.com",
+		  "id": "1694376373969523",
+		  "img": "https://lookaside.facebook.com/platform/profilepic/?asid=1694376373969523&height=50&width=50&ext=1524529039&hash=AeQ68RO-Fh96Hm61",
+		  "last_name": "Altenji",
+		  "name": "Mohammad",
+		}
+		
+		this.props.set_user_auth(user);*/
+  };
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('https://turkubackend.herokuapp.com/auth/google');
+  loginWithGoogle = () => {
+  	this.openURL('https://turkubackend.herokuapp.com/auth/google')
+  };
 
   // Open URL in a browser
   openURL = (url) => {
-    // Use SafariView on iOS
-    if (Platform.OS === 'ios') {
-      SafariView.show({
-        url: url,
-        fromBottom: true,
-      });
-    }
-    // Or Linking.openURL on Android
-    else {
-      Linking.openURL(url);
-    }
+		// Use SafariView on iOS
+		if (Platform.OS === 'ios') {
+		  SafariView.show({
+			url: url,
+			fromBottom: true,
+		  });
+		}
+		// Or Linking.openURL on Android
+		else {
+		  Linking.openURL(url);
+		}
   };
 	
 	render() {
@@ -97,7 +125,6 @@ class Logging extends React.Component {
 				<TouchableOpacity
 					style={styles.gm_button}
 					onPress={this.loginWithGoogle}
-					onPress={this.onPress}
 				>
 					<View style={styles.button_inner}>
 						<Icon
@@ -109,8 +136,9 @@ class Logging extends React.Component {
 				</TouchableOpacity>
 			</View>
 		);
+		
 	}
-}
+};
 
 const mapStateToProps = (state) => {
 	return {
@@ -120,9 +148,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		bla: (val) => {
+		set_user_auth: (val) => {
 			dispatch({
-				type: '',
+				type: 'SET_USER_AUTH',
 				payload: val,
 			});
 		},
